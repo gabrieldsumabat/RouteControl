@@ -3,7 +3,7 @@ import java.net.*;
 
 class ServerThread implements Runnable
 {
-    Socket connectionSocket;
+    private Socket connectionSocket;
     private ObjectInputStream inStream = null;
 
     public ServerThread(Socket s){
@@ -14,7 +14,7 @@ class ServerThread implements Runnable
     }
 
     public void run(){
-        //Need to still add RCU update math
+        //Need to still add RCU update handling
         try{
             inStream = new ObjectInputStream(connectionSocket.getInputStream());
             RCU packet = (RCU) inStream.readObject();
