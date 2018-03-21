@@ -27,8 +27,9 @@ class ServerThread implements Runnable
                 Launcher RttRes = new Launcher();
                 //Update RCU and return
                 packet.setRttFlag(2);
-                //NEED TO SET FUNCTION TO PROPERLY RETRIEVE HOSTNAME + PORT
-                RttRes.sendRCU("localhost",4445, packet);
+                //Limitation: All Route Controllers must be using port 1450
+                RttRes.sendRCU(connectionSocket.getInetAddress(),1450, packet);
+
             }
             connectionSocket.close();
 

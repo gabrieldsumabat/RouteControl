@@ -1,7 +1,9 @@
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 public class Launcher {
 
@@ -14,7 +16,7 @@ public class Launcher {
 
     }
 
-    public void sendRCU(String hostname, int portNum, RCU updatePacket) {
+    public void sendRCU(InetAddress hostname, int portNum, RCU updatePacket) {
 
         while (!isConnected) {
             try {
@@ -35,7 +37,13 @@ public class Launcher {
      public static void main(String[] args) {
         RCU RCUsent = new RCU(1, 2, 3, 4, 5, 6, 7, 1);
         Launcher client = new Launcher();
-        client.sendRCU("localhost",4445, RCUsent);
+        try {
+            InetAddress target = InetAddress.getByName("127.0.0.1");
+            client.sendRCU(target,1450, RCUsent);
+        }
+        catch (UnknownHostException uhe) {
+            uhe.printStackTrace();
+        }
     }
 }
 
