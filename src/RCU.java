@@ -3,17 +3,17 @@ import java.lang.System;
 
 public class RCU implements Serializable {
 
-    private int RCID;           //Source ID
-    private int LinkID;         //Target ID
-    private int LinkType;       //Overlay/Network
-    private int LinkCapacity;   //Configured BW
-    private int TrafficDensity; //Number of bytes to be sent
-    private int AvailableBW;    //Available BW
-    private int LinkCost;       //RTT Cost Function
+    private int RCID;           //  Source ID
+    private int LinkID;         //  Target ID
+    private int LinkType;       // (1)Overlay (2) Network
+    private int LinkCapacity;   //  Configured BW
+    private int TrafficDensity; //  Number of bytes to be sent
+    private int AvailableBW;    //  Available BW
+    private int LinkCost;       //  RTT Cost Function
     //RTT Variables
-    private int RttFlag;        //0 -> Not in use, 1 -> RTT_REQ, 2 -> RTT_RES
-    private long RttSent;       //Time packet was sent
-    private long RttReceived;   //Time packet finished round trip
+    private int RttFlag;        //  (0) Not in use (1) RTT_REQ (2) RTT_RES
+    private long RttSent;       // Time packet was sent
+    private long RttReceived;   // Time packet finished round trip
 
     public RCU(int Source, int NextHop, int HopType, int Capacity, int Density, int BW, int Cost, int RTT_Update) {
 
