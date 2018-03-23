@@ -3,6 +3,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class RouteController {
 
     public static void main(String argv[]) {
+        Config localConfig = new Config();
         LinkedBlockingQueue<RCU> queue = new LinkedBlockingQueue<>();
         //Start the Listener Thread
         Listener RouteListen = new Listener(queue);
@@ -14,8 +15,6 @@ public class RouteController {
                 }  catch (InterruptedException ie) {
                 ie.printStackTrace();
                 }
-
-
 
     }
 

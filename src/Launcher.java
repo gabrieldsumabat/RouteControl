@@ -36,14 +36,13 @@ public class Launcher {
 
 
      public static void main(String[] args) {
-        RCU RCUsent = new RCU(1, 2, 3, 4, 5, 6, 7, 1);
-        Launcher client = new Launcher();
-        try {
-            InetAddress target = InetAddress.getByName("127.0.0.1");
-            client.sendRCU(target,1450, RCUsent);
-        }
-        catch (UnknownHostException uhe) {
-            uhe.printStackTrace();
+         try {
+            RCU RCUsent = new RCU(1, 2, 3, 4, 5, 6, 7, 1, InetAddress.getByName("127.0.0.1"));
+            Launcher client = new Launcher();
+            client.sendRCU(RCUsent.getTargetIP(),1450, RCUsent);
+            }
+            catch (UnknownHostException uhe) {
+                uhe.printStackTrace();
         }
     }
 }

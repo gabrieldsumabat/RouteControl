@@ -32,8 +32,13 @@ class ServerThread implements Runnable
                 Launcher RttRes = new Launcher();
                 //Update RCU and return
                 packet.setRttFlag(2);
+                packet.setTargetIP(connectionSocket.getInetAddress());
+                //SWITCH RCID and LINKID
+                //FILL IN REST OF RCU
+
+
                 //Limitation: All Route Controllers must be using port 1450
-                RttRes.sendRCU(connectionSocket.getInetAddress(),1450, packet);
+                RttRes.sendRCU(packet.getTargetIP(),1450, packet);
             }
             //Store in LinkedBlockingQueue for processing
             if (packet.getRttFlag() != 1) {

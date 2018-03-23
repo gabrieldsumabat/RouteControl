@@ -1,21 +1,23 @@
 import java.io.Serializable;
 import java.lang.System;
+import java.net.InetAddress;
 
 public class RCU implements Serializable {
 
-    private int RCID;           //  Source ID
-    private int LinkID;         //  Target ID
-    private int LinkType;       // (1)Overlay (2) Network
-    private int LinkCapacity;   //  Configured BW
-    private int TrafficDensity; //  Number of bytes to be sent
-    private int AvailableBW;    //  Available BW
-    private int LinkCost;       //  RTT Cost Function
+    private int RCID;            //  Source ID
+    private int LinkID;          //  Target ID
+    private InetAddress targetIP;// Target IP Address
+    private int LinkType;        // (1)Overlay (2) Network
+    private int LinkCapacity;    //  Configured BW
+    private int TrafficDensity;  //  Number of bytes to be sent
+    private int AvailableBW;     //  Available BW
+    private int LinkCost;        //  RTT Cost Function
     //RTT Variables
-    private int RttFlag;        //  (0) Not in use (1) RTT_REQ (2) RTT_RES
-    private long RttSent;       // Time packet was sent
-    private long RttReceived;   // Time packet finished round trip
+    private int RttFlag;         //  (0) Not in use (1) RTT_REQ (2) RTT_RES
+    private long RttSent;        // Time packet was sent
+    private long RttReceived;    // Time packet finished round trip
 
-    public RCU(int Source, int NextHop, int HopType, int Capacity, int Density, int BW, int Cost, int RTT_Update) {
+    public RCU(int Source, int NextHop, int HopType, int Capacity, int Density, int BW, int Cost, int RTT_Update, InetAddress target) {
 
         setRCID(Source);
         setLinkID(NextHop);
@@ -24,6 +26,7 @@ public class RCU implements Serializable {
         setTrafficDensity(Density);
         setAvailableBW(BW);
         setLinkCost(Cost);
+        setTargetIP(target);
 
         setRttFlag(RTT_Update);
         if (RTT_Update == 1)
@@ -117,6 +120,13 @@ public class RCU implements Serializable {
         RttReceived = System.currentTimeMillis();
     }
 
+    public InetAddress getTargetIP() {
+        return targetIP;
+    }
+
+    public void setTargetIP(InetAddress targetIP) {
+        this.targetIP = targetIP;
+    }
 //Package Methods
     public long getRoundTripTime()
     {
