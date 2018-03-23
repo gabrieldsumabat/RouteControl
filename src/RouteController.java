@@ -9,6 +9,12 @@ public class RouteController {
         Listener RouteListen = new Listener(queue);
         Thread listenerThread = new Thread(RouteListen);
         listenerThread.start();
+
+        for (int j=0; j<4;j++) {
+            System.out.println(localConfig.addressBook[j]);
+        }
+        System.out.println("\n\n\n\n\n\n\n"+localConfig.myASN.getRCU(localConfig.addressBook[2],1));
+
         //main timer here:
             try{
                 System.out.println("=====================\n\n"+ queue.take() + "\n\n=====================");

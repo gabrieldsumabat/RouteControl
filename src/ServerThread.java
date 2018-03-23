@@ -33,10 +33,9 @@ class ServerThread implements Runnable
                 //Update RCU and return
                 packet.setRttFlag(2);
                 packet.setTargetIP(connectionSocket.getInetAddress());
-                //SWITCH RCID and LINKID
-                //FILL IN REST OF RCU
-
-
+                int hold = packet.getLinkID();
+                packet.setLinkID(packet.getRCID());
+                packet.setRCID(hold);
                 //Limitation: All Route Controllers must be using port 1450
                 RttRes.sendRCU(packet.getTargetIP(),1450, packet);
             }

@@ -1,13 +1,14 @@
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ASN {
-    private int ASNID;
-    private int LinkCapacity;
-    private int LinkCost;
-    private int RCID;
-    private InetAddress ipa;
+    private int ASNID;          //RC+ASN
+    private int LinkCapacity;   //ASN
+    private int LinkCost;       //ASN
+    private int RCID;           //RC
+    private String ipa;         //RC
 
-    public ASN(int aSNID, int linkCapacity, int linkCost, int rCID, InetAddress Ipa) {
+    public ASN(int aSNID, int linkCapacity, int linkCost, int rCID, String Ipa) {
         setASNID(aSNID);
         setLinkCapacity(linkCapacity);
         setLinkCost(linkCost);
@@ -15,12 +16,21 @@ public class ASN {
         setIpa(Ipa);
     }
 
- /*   public RCU getRCU(ASN selfASN, ASN targetASN) {
-        RCU packet = new RCU()
-
-        return packet
+//DENSITY AND BANDWIDTH NEED TO BE SET
+    public RCU getRCU(ASN targetASN, int RTTFlag) {
+        try {
+            InetAddress ipaddress =InetAddress.getByName(targetASN.getIpa());
+            RCU packet = new RCU(getRCID(), targetASN.getASNID(),2,targetASN.getLinkCapacity(),5,5,targetASN.getLinkCost(),RTTFlag,ipaddress);
+            if (targetASN.getRCID() != -1) {
+                packet.setLinkType(1);
+            }
+            return packet;
+        } catch (UnknownHostException uhe){
+            uhe.printStackTrace();
+        }
+        return null;
     }
-*/
+
     //SETTERS AND GETTERS
 
     public int getASNID() {
@@ -55,13 +65,29 @@ public class ASN {
         this.RCID = RCID;
     }
 
-    public InetAddress getIpa() {
+    public String getIpa() {
         return ipa;
     }
 
-    public void setIpa(InetAddress ipa) {
+    public void setIpa(String ipa) {
         this.ipa = ipa;
     }
 
+    //METHODS TO ALLOW SERIALIZATION OF THE OBJECT================================
+    public int hashCode() {
+        return ASNID;
+    }
 
+
+    //Overrides toString
+    public String toString() {
+
+        return  "\n\n\t ASN ID:                " + getASNID() +
+                "\n\t RC ID:                   " + getRCID() +
+                "\n\t Link Capacity:           " + getLinkCapacity() +
+                "\n\t Link Cost:               " + getLinkCost() +
+                "\n\t IP:                    " + getIpa() +
+                "\n";
+
+    }
 }

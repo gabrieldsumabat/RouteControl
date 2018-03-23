@@ -1,26 +1,34 @@
 import java.io.*;
-import java.net.InetAddress;
 
 public class Config {
     volatile  ASN myASN;
-    volatile ASN[] externalRC = new ASN[10];
-    volatile ASN[] directConnect = new ASN[10];
+    private ASN[] externalRC = new ASN[10];
+    volatile ASN[] addressBook = new ASN[10];
 
     public Config() {
         try{
             FileInputStream fstream = new FileInputStream("config.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String[] splits = br.readLine().split(" ");
-            myASN = new ASN(Integer.parseInt(splits[1]), -1, 0, Integer.parseInt(splits[0]), InetAddress.getByName(splits[2]));
+            myASN = new ASN(Integer.parseInt(splits[1]), -1, 0, Integer.parseInt(splits[0]), splits[2]);
             int nor = Integer.parseInt(br.readLine());
             for (int i=0; i<nor; i++) {
                 splits = br.readLine().split(" ");
-                externalRC[i] = new ASN(Integer.parseInt(splits[1]), 1, 1, Integer.parseInt(splits[0]), InetAddress.getByName(splits[2]));
+                externalRC[i] = new ASN(Integer.parseInt(splits[1]), 1, 9, Integer.parseInt(splits[0]), splits[2]);
             }
             int noa = Integer.parseInt(br.readLine());
             for (int i=0; i<noa; i++) {
                 splits = br.readLine().split(" ");
-                externalRC[i] = new ASN(Integer.parseInt(splits[0]), Integer.parseInt(splits[1]), Integer.parseInt(splits[2]), -1, null);
+                addressBook[i] = new ASN(Integer.parseInt(splits[0]), Integer.parseInt(splits[1]), Integer.parseInt(splits[2]), -1, null);
+            }
+            //Combine addressBook with externalRC
+            for (int j=0; j<noa;j++) {
+                for(int k=0; k<nor; k++){
+                    if (addressBook[j].getASNID()==externalRC[k].getASNID()) {
+                        addressBook[j].setIpa(externalRC[k].getIpa());
+                        addressBook[j].setRCID(externalRC[k].getRCID());
+                    }
+                }
             }
             fstream.close();
         } catch (FileNotFoundException fnfe) {
@@ -32,7 +40,9 @@ public class Config {
 
     public static void main(String argv[]) {
         Config localConfig = new Config();
-        System.out.println(localConfig.externalRC[1].getASNID());
+        for (int j=0; j<4;j++) {
+            System.out.println(localConfig.addressBook[j]);
+        }
     }
 
 }

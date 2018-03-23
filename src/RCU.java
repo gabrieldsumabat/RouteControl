@@ -27,14 +27,12 @@ public class RCU implements Serializable {
         setAvailableBW(BW);
         setLinkCost(Cost);
         setTargetIP(target);
-
         setRttFlag(RTT_Update);
         if (RTT_Update == 1)
         {
             setRttSent();
         }
     }
-
 
     public int getRCID() {
         return RCID;
@@ -106,10 +104,6 @@ public class RCU implements Serializable {
 
     public void setRttSent() {
         RttSent = System.currentTimeMillis();
-    }
-
-    public void setRttSent(long time) {
-        RttSent = time;
     }
 
     public long getRttReceived() {
