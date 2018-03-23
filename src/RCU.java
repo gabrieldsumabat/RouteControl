@@ -121,7 +121,6 @@ public class RCU implements Serializable {
     public long getRoundTripTime()
     {
         if (getRttFlag() != 0) {
-            setRttReceived();
             return getRttReceived() - getRttSent();
         }
         else {
