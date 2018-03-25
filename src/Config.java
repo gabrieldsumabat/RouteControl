@@ -4,6 +4,8 @@ public class Config {
     volatile  ASN myASN;
     private ASN[] externalRC = new ASN[10];
     volatile ASN[] addressBook = new ASN[10];
+    int nor;
+    int noa;
 
     public Config() {
         try{
@@ -11,12 +13,12 @@ public class Config {
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String[] splits = br.readLine().split(" ");
             myASN = new ASN(Integer.parseInt(splits[1]), -1, 0, Integer.parseInt(splits[0]), splits[2]);
-            int nor = Integer.parseInt(br.readLine());
+            nor = Integer.parseInt(br.readLine());
             for (int i=0; i<nor; i++) {
                 splits = br.readLine().split(" ");
                 externalRC[i] = new ASN(Integer.parseInt(splits[1]), 1, 9, Integer.parseInt(splits[0]), splits[2]);
             }
-            int noa = Integer.parseInt(br.readLine());
+            noa = Integer.parseInt(br.readLine());
             for (int i=0; i<noa; i++) {
                 splits = br.readLine().split(" ");
                 addressBook[i] = new ASN(Integer.parseInt(splits[0]), Integer.parseInt(splits[1]), Integer.parseInt(splits[2]), -1, null);
@@ -36,6 +38,16 @@ public class Config {
         }catch (IOException ie){
             ie.printStackTrace();
         }
+    }
+
+    public int getASNfromRC(int RCID){
+
+        for (int l=0; l<noa;l++){
+            if (addressBook[l].getRCID() == RCID) {
+                return addressBook[l].getASNID();
+            }
+        }
+        return (-1);
     }
 
     public static void main(String argv[]) {

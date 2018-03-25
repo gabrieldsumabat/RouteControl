@@ -11,7 +11,6 @@ public class Launcher {
     private ObjectOutputStream outputStream = null;
     private boolean isConnected = false;
 
-
     public Launcher() {
 
     }
@@ -37,7 +36,7 @@ public class Launcher {
 
      public static void main(String[] args) {
          try {
-            RCU RCUsent = new RCU(1, 2, 3, 4, 5, 6, 7, 1, InetAddress.getByName("127.0.0.1"));
+            RCU RCUsent = new RCU(2, 100, 1, 4, 5, 6, 7, 1, InetAddress.getByName("127.0.0.1"));
             Launcher client = new Launcher();
             client.sendRCU(RCUsent.getTargetIP(),1450, RCUsent);
             }

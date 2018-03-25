@@ -78,7 +78,6 @@ public class ASN {
         return ASNID;
     }
 
-
     //Overrides toString
     public String toString() {
 

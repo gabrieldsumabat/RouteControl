@@ -7,12 +7,14 @@ class ServerThread implements Runnable
     private Socket connectionSocket;
     private ObjectInputStream inStream = null;
     private LinkedBlockingQueue<RCU> queue;
+    private Config LocalConfig;
 
-    public ServerThread(Socket s, LinkedBlockingQueue<RCU> q){
+    public ServerThread(Socket s, LinkedBlockingQueue<RCU> q, Config localconfig){
         try{
             System.out.println("Client Socket Connected" );
             connectionSocket=s;
             queue = q;
+            LocalConfig = localconfig;
         }catch(Exception e){e.printStackTrace();}
     }
 
@@ -30,12 +32,10 @@ class ServerThread implements Runnable
             //Return RTT_REQUEST
             else if (packet.getRttFlag() == 1) {
                 Launcher RttRes = new Launcher();
-                //Update RCU and return
                 packet.setRttFlag(2);
                 packet.setTargetIP(connectionSocket.getInetAddress());
-                int hold = packet.getLinkID();
-                packet.setLinkID(packet.getRCID());
-                packet.setRCID(hold);
+                packet.setLinkID(LocalConfig.getASNfromRC(packet.getRCID()));
+                packet.setRCID(LocalConfig.myASN.getRCID());
                 //Limitation: All Route Controllers must be using port 1450
                 RttRes.sendRCU(packet.getTargetIP(),1450, packet);
             }
