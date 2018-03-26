@@ -74,11 +74,12 @@ public class ASN {
     }
 
     //METHODS TO ALLOW SERIALIZATION OF THE OBJECT================================
+    @Override
     public int hashCode() {
         return ASNID;
     }
 
-    //Overrides toString
+    @Override
     public String toString() {
 
         return  "\n\n\t ASN ID:                " + getASNID() +

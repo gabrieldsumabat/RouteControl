@@ -133,12 +133,13 @@ public class RCU implements Serializable {
     }
 
 //METHODS TO ALLOW SERIALIZATION OF THE OBJECT================================
+    @Override
     public int hashCode() {
         return RCID;
     }
 
 
-    //Overrides toString
+    @Override
     public String toString() {
 
         return  "\n\n\t RC ID:                " + getRCID() +

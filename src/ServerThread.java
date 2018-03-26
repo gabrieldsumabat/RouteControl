@@ -30,7 +30,7 @@ class ServerThread implements Runnable
                 System.out.println("Round Trip Time (ms): " + packet.getRoundTripTime());
             }
             //Return RTT_REQUEST
-            else if (packet.getRttFlag() == 1) {
+            if (packet.getRttFlag() == 1) {
                 Launcher RttRes = new Launcher();
                 packet.setRttFlag(2);
                 packet.setTargetIP(connectionSocket.getInetAddress());
@@ -39,8 +39,8 @@ class ServerThread implements Runnable
                 //Limitation: All Route Controllers must be using port 1450
                 RttRes.sendRCU(packet.getTargetIP(),1450, packet);
             }
-            //Store in LinkedBlockingQueue for processing
-            if (packet.getRttFlag() != 1) {
+            //ELSE: Store in LinkedBlockingQueue for processing
+            else {
                 try{
                     queue.put(packet);
                 } catch (InterruptedException ie){
