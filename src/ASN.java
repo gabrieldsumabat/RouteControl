@@ -20,7 +20,7 @@ public class ASN {
     public RCU getRCU(ASN targetASN, int RTTFlag) {
         try {
             InetAddress ipaddress =InetAddress.getByName(targetASN.getIpa());
-            RCU packet = new RCU(getRCID(), targetASN.getASNID(),2,targetASN.getLinkCapacity(),5,5,targetASN.getLinkCost(),RTTFlag,ipaddress);
+            RCU packet = new RCU(this.getRCID(), targetASN.getASNID(),2,targetASN.getLinkCapacity(),5,5,targetASN.getLinkCost(),RTTFlag,ipaddress);
             if (targetASN.getRCID() != -1) {
                 packet.setLinkType(1);
             }
