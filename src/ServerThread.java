@@ -7,7 +7,7 @@ class ServerThread implements Runnable
     private Socket connectionSocket;
     private ObjectInputStream inStream = null;
     private LinkedBlockingQueue<RCU> queue;
-    private Config LocalConfig;
+    volatile Config LocalConfig;
 
     public ServerThread(Socket s, LinkedBlockingQueue<RCU> q, Config localconfig){
         try{

@@ -2,10 +2,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class RcUpdater implements Runnable {
-    private Config localConfig;
+    volatile Config LocalConfig;
 
     public RcUpdater(Config localconfig){
-        localConfig = localconfig;
+        LocalConfig = localconfig;
     }
 
     @Override
@@ -13,12 +13,12 @@ public class RcUpdater implements Runnable {
         //Sends a RCU to each known RC in the network
         Launcher Launchpad = new Launcher();
         while (true) {
-                for (int i=0; i < localConfig.getNoa();i++ ) {
+                for (int i = 0; i < LocalConfig.getNoa(); i++ ) {
                     try {
-                        if (localConfig.addressBook[i].getRCID() != -1) {
-                            RCU packet = localConfig.addressBook[i].getRCU(localConfig.addressBook[i], 0);
-                            packet.setAd(localConfig.addressBook);
-                            InetAddress target = InetAddress.getByName(localConfig.addressBook[i].getIpa());
+                        if (LocalConfig.addressBook[i].getRCID() != -1) {
+                            RCU packet = LocalConfig.addressBook[i].getRCU(LocalConfig.addressBook[i], 0);
+                            packet.setAd(LocalConfig.addressBook);
+                            InetAddress target = InetAddress.getByName(LocalConfig.addressBook[i].getIpa());
                             Launchpad.sendRCU(target, 1450, packet);
                         }
                     } catch (UnknownHostException uhe) {

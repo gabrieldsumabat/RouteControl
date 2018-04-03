@@ -2,10 +2,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class RttUpdater implements Runnable {
-    private Config localConfig;
+    volatile Config LocalConfig;
 
     public RttUpdater(Config localconfig){
-        localConfig = localconfig;
+        LocalConfig = localconfig;
     }
 
     @Override
@@ -13,11 +13,11 @@ public class RttUpdater implements Runnable {
         //Sends an RTT_REQ to each Route Controller known in Address Book
         Launcher Launchpad = new Launcher();
         while (true) {
-            for (int i=0; i < localConfig.getNoa();i++ ) {
+            for (int i = 0; i < LocalConfig.getNoa(); i++ ) {
                 try {
-                    if (localConfig.addressBook[i].getRCID() != -1) {
-                        RCU packet = localConfig.addressBook[i].getRCU(localConfig.addressBook[i], 1);
-                        InetAddress target = InetAddress.getByName(localConfig.addressBook[i].getIpa());
+                    if (LocalConfig.addressBook[i].getRCID() != -1) {
+                        RCU packet = LocalConfig.addressBook[i].getRCU(LocalConfig.addressBook[i], 1);
+                        InetAddress target = InetAddress.getByName(LocalConfig.addressBook[i].getIpa());
                         Launchpad.sendRCU(target, 1450, packet);
                     }
                 } catch (UnknownHostException uhe) {

@@ -10,8 +10,6 @@ public class ASN {
     private long LinkCost;       //ASN
     private int RCID;           //RC
     private String ipa;         //RC, May be address of next hop!
-
-    //MAYBE?
     private List<Integer> Hops; //Next Hop in Network
 
     public ASN(int aSNID, int linkCapacity, int linkCost, int rCID, String Ipa) {

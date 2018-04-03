@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Listener implements Runnable{
     //Listens to incoming connections and spawns a ServerThread to handle the new connection
     private LinkedBlockingQueue<RCU> queue;
-    private Config LocalConfig;
+    volatile Config LocalConfig;
 
     public Listener(LinkedBlockingQueue<RCU> q, Config localconfig){
 
