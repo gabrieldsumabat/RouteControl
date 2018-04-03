@@ -1,5 +1,3 @@
-import sun.java2d.cmm.lcms.LcmsServiceProvider;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -43,8 +41,8 @@ public class Consumer implements Runnable{
                                         if (Ad.getASNID() == target.getASNID() && target.getLinkCost() > netCost) {
                                             target.setLinkCost(netCost);
                                             //If this Hop is not yet considered
-                                            if (target.checkHop(packet.getLinkID())) {
-                                                target.addHop(packet.getLinkID());
+                                            if (target.checkHop(LocalConfig.getASNfromRC(packet.getRCID()))) {
+                                                target.addHop(LocalConfig.getASNfromRC(packet.getRCID()));
                                             }
                                             target.setIpa(LocalConfig.getIPAfromASN(LocalConfig.getASNfromRC(packet.getRCID())));
                                             System.out.println("Updating "+target.getASNID()+" cost to "+netCost+".\n");
@@ -73,7 +71,7 @@ public class Consumer implements Runnable{
                                 //If the ASN has no RC -> Print Total Cost and the ASNID it was delivered to
                                 else{
                                     long totalCost = packet.getLinkCost() + LocalConfig.addressBook[j].getLinkCost();
-                                    System.out.println("Packet Delivered to "+packet.getLinkID()+"\n\t Total Cost: "+totalCost);
+                                    System.out.println("Packet Delivered to "+packet.getLinkID()+"\n\t estimated Cost: "+totalCost);
                                 }
                             }
                         }

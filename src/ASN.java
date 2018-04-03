@@ -1,5 +1,6 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -99,6 +100,7 @@ public class ASN {
                 "\n\t Link Capacity:           " + getLinkCapacity() +
                 "\n\t Link Cost:               " + getLinkCost() +
                 "\n\t IP:                      " + getIpa() +
+                "\n\t Hops:                    "+ Arrays.toString(Hops.toArray()) +
                 "\n";
 
     }
