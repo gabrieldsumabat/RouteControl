@@ -10,7 +10,7 @@ public class RouteController {
         System.out.println(localConfig.myASN);
         //Print out Address Book
         System.out.println("Address Book:");
-        for (int j = 0; j < localConfig.noa; j++) {
+        for (int j = 0; j < localConfig.getNoa(); j++) {
             System.out.println(localConfig.addressBook[j]);
         }
         //Initialize the Shared Queue for storing incoming RCU
@@ -31,6 +31,12 @@ public class RouteController {
         RttUpdater RttUpdate = new RttUpdater(localConfig);
         Thread RttThread = new Thread(RttUpdate);
         RttThread.start();
-        //TODO Fix Logic for RCU consumer
+        //TODO: Route Advertisement and Updating new Routes
+        //Ideas:
+        // A) Add AddressBook to the RCU packet to send the address set with it?
+        // B) Then compare the added cost and if the cost is lower, update next path?
+        // C) Would have to change ASN to account for the next hop and have packets forward it?
+        //Change IPA to next hop?
+        //Create a second externalBook indicating addresses which require a next hop?
     }
 }

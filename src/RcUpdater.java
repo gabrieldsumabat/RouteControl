@@ -11,9 +11,10 @@ public class RcUpdater implements Runnable {
 
     @Override
     public void run() {
+        //Sends a RCU to each known RC in the network
         Launcher Launchpad = new Launcher();
         while (true) {
-                for (int i=0; i < localConfig.noa;i++ ) {
+                for (int i=0; i < localConfig.getNoa();i++ ) {
                     try {
                         if (localConfig.addressBook[i].getRCID() != -1) {
                             RCU packet = localConfig.addressBook[i].getRCU(localConfig.addressBook[i], 0);

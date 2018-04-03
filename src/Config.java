@@ -4,8 +4,8 @@ public class Config {
     volatile  ASN myASN;
     private ASN[] externalRC = new ASN[10];
     volatile ASN[] addressBook = new ASN[10];
-    int nor;
-    int noa;
+    private int nor;
+    private int noa;
 
     public Config() {
         try{
@@ -50,11 +50,19 @@ public class Config {
         return (-1);
     }
 
+    public int getNoa() {
+        return noa;
+    }
+
+    public void setNoa(int noadd){
+        noa = noadd;
+    }
+
     public static void main(String argv[]) {
         Config localConfig = new Config();
+        System.out.println(localConfig.myASN);
         for (int j=0; j<4;j++) {
             System.out.println(localConfig.addressBook[j]);
         }
     }
-
 }

@@ -3,21 +3,22 @@ import java.lang.System;
 import java.net.InetAddress;
 
 public class RCU implements Serializable {
+    //Serialized Object to be exchanged over Socket Connections
 
-    private int RCID;            //  Source ID
-    private int LinkID;          //  Target ID
+    private int RCID;            //  Source RCID
+    private int LinkID;          //  Target ASNID
     private InetAddress targetIP;// Target IP Address
     private int LinkType;        // (1)Overlay (2) Network
     private int LinkCapacity;    //  Configured BW
     private int TrafficDensity;  //  Number of bytes to be sent
     private int AvailableBW;     //  Available BW
-    private int LinkCost;        //  RTT Cost Function
+    private long LinkCost;        //  RTT Cost Function
     //RTT Variables
     private int RttFlag;         //  (0) Not in use (1) RTT_REQ (2) RTT_RES
     private long RttSent;        // Time packet was sent
     private long RttReceived;    // Time packet finished round trip
 
-    public RCU(int Source, int NextHop, int HopType, int Capacity, int Density, int BW, int Cost, int RTT_Update, InetAddress target) {
+    public RCU(int Source, int NextHop, int HopType, int Capacity, int Density, int BW, long Cost, int RTT_Update, InetAddress target) {
 
         setRCID(Source);
         setLinkID(NextHop);
@@ -82,11 +83,11 @@ public class RCU implements Serializable {
         AvailableBW = availableBW;
     }
 
-    public int getLinkCost() {
+    public long getLinkCost() {
         return LinkCost;
     }
 
-    public void setLinkCost(int linkCost) {
+    public void setLinkCost(long linkCost) {
         LinkCost = linkCost;
     }
 
@@ -132,7 +133,7 @@ public class RCU implements Serializable {
         }
     }
 
-//METHODS TO ALLOW SERIALIZATION OF THE OBJECT================================
+//METHODS TO ALLOW SERIALIZATION OF THE OBJECT
     @Override
     public int hashCode() {
         return RCID;

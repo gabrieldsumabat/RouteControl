@@ -2,11 +2,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class ASN {
+    //Object storing information about each possible address
     private int ASNID;          //RC+ASN
     private int LinkCapacity;   //ASN
-    private int LinkCost;       //ASN
+    private long LinkCost;       //ASN
     private int RCID;           //RC
-    private String ipa;         //RC
+    private String ipa;         //RC, May be address of next hop!
 
     public ASN(int aSNID, int linkCapacity, int linkCost, int rCID, String Ipa) {
         setASNID(aSNID);
@@ -49,11 +50,11 @@ public class ASN {
         LinkCapacity = linkCapacity;
     }
 
-    public int getLinkCost() {
+    public long getLinkCost() {
         return LinkCost;
     }
 
-    public void setLinkCost(int linkCost) {
+    public void setLinkCost(long linkCost) {
         LinkCost = linkCost;
     }
 

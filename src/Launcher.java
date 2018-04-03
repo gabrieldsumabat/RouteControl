@@ -6,7 +6,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class Launcher {
-
+    //Socket Connection with Target IPA and sends the RCU
     private Socket socket = null;
     private ObjectOutputStream outputStream = null;
     private boolean isConnected = false;

@@ -20,7 +20,7 @@ class ServerThread implements Runnable
 
     @Override
     public void run(){
-        //Read the object
+        //Read incoming Object
         try{
             inStream = new ObjectInputStream(connectionSocket.getInputStream());
             RCU packet = (RCU) inStream.readObject();
@@ -30,8 +30,8 @@ class ServerThread implements Runnable
                 packet.setRttReceived();
                 System.out.println("Round Trip Time (ms): " + packet.getRoundTripTime());
             }
-            //Return RTT_REQUEST
-            if (packet.getRttFlag() == 1) {
+            //Return RTT_REQUEST if targeted to local ID
+            if (packet.getRttFlag() == 1 && packet.getLinkID()==LocalConfig.myASN.getASNID()) {
                 Launcher RttRes = new Launcher();
                 packet.setRttFlag(2);
                 packet.setTargetIP(connectionSocket.getInetAddress());
@@ -48,7 +48,6 @@ class ServerThread implements Runnable
                     ie.printStackTrace();
                 }
             }
-            connectionSocket.close();
         } catch (SocketException se) {
             System.exit(0);
         } catch (IOException e) {
