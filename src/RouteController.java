@@ -32,11 +32,9 @@ public class RouteController {
         Thread RttThread = new Thread(RttUpdate);
         RttThread.start();
         //TODO: Route Advertisement and Updating new Routes
-        //Ideas:
-        // A) Add AddressBook to the RCU packet to send the address set with it?
-        // B) Then compare the added cost and if the cost is lower, update next path?
-        // C) Would have to change ASN to account for the next hop and have packets forward it?
-        //Change IPA to next hop?
-        //Create a second externalBook indicating addresses which require a next hop?
+        // A) RCU with RTT_flag == 0 sends ASN[] with all know addresses
+        // B) Write function to handle the different cases
+
+        //Will put User Input Handling Here
     }
 }

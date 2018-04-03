@@ -3,7 +3,6 @@ import java.net.UnknownHostException;
 
 public class RttUpdater implements Runnable {
     private Config localConfig;
-    private int counter;
 
     public RttUpdater(Config localconfig){
         localConfig = localconfig;

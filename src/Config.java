@@ -2,8 +2,8 @@ import java.io.*;
 
 public class Config {
     volatile  ASN myASN;
-    private ASN[] externalRC = new ASN[10];
-    volatile ASN[] addressBook = new ASN[10];
+    private ASN[] externalRC = new ASN[25];
+    volatile ASN[] addressBook = new ASN[25];
     private int nor;
     private int noa;
 
@@ -41,13 +41,30 @@ public class Config {
     }
 
     public int getASNfromRC(int RCID){
-
         for (int l=0; l<noa;l++){
             if (addressBook[l].getRCID() == RCID) {
                 return addressBook[l].getASNID();
             }
         }
         return (-1);
+    }
+
+    public String getIPAfromASN(int ASN){
+        for (int a=0;a<noa;a++){
+            if (addressBook[a].getASNID()==ASN){
+                return addressBook[a].getIpa();
+            }
+        }
+        return null;
+    }
+
+    public Boolean ASNinBook(int ASN){
+        for (int a=0;a<noa;a++){
+            if (addressBook[a].getASNID()==ASN){
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getNoa() {

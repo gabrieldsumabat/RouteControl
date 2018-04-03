@@ -28,7 +28,7 @@ class ServerThread implements Runnable
             //Set Packet Return time if measuring RTT
             if (packet.getRttFlag() == 2) {
                 packet.setRttReceived();
-                System.out.println("Round Trip Time (ms): " + packet.getRoundTripTime());
+                System.out.println("Round Trip Time (ms): " + packet.getRoundTripTime()+"\n");
             }
             //Return RTT_REQUEST if targeted to local ID
             if (packet.getRttFlag() == 1 && packet.getLinkID()==LocalConfig.myASN.getASNID()) {

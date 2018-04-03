@@ -9,30 +9,33 @@ public class RCU implements Serializable {
     private int LinkID;          //  Target ASNID
     private InetAddress targetIP;// Target IP Address
     private int LinkType;        // (1)Overlay (2) Network
-    private int LinkCapacity;    //  Configured BW
-    private int TrafficDensity;  //  Number of bytes to be sent
-    private int AvailableBW;     //  Available BW
     private long LinkCost;        //  RTT Cost Function
     //RTT Variables
     private int RttFlag;         //  (0) Not in use (1) RTT_REQ (2) RTT_RES
     private long RttSent;        // Time packet was sent
     private long RttReceived;    // Time packet finished round trip
+    //Route Advertisement
+    private ASN[] advertisement;
 
-    public RCU(int Source, int NextHop, int HopType, int Capacity, int Density, int BW, long Cost, int RTT_Update, InetAddress target) {
+    public RCU(int Source, int NextHop, int HopType, long Cost, int RTT_Update, InetAddress target) {
 
         setRCID(Source);
         setLinkID(NextHop);
         setLinkType(HopType);
-        setLinkCapacity(Capacity);
-        setTrafficDensity(Density);
-        setAvailableBW(BW);
         setLinkCost(Cost);
         setTargetIP(target);
         setRttFlag(RTT_Update);
-        if (RTT_Update == 1)
-        {
+        if (RTT_Update == 1) {
             setRttSent();
         }
+    }
+
+    public void setAd(ASN[] ad){
+        advertisement = ad;
+    }
+
+    public ASN[] getAd(){
+        return advertisement;
     }
 
     public int getRCID() {
@@ -57,30 +60,6 @@ public class RCU implements Serializable {
 
     public void setLinkType(int linkType) {
         LinkType = linkType;
-    }
-
-    public int getLinkCapacity() {
-        return LinkCapacity;
-    }
-
-    public void setLinkCapacity(int linkCapacity) {
-        LinkCapacity = linkCapacity;
-    }
-
-    public int getTrafficDensity() {
-        return TrafficDensity;
-    }
-
-    public void setTrafficDensity(int trafficDensity) {
-        TrafficDensity = trafficDensity;
-    }
-
-    public int getAvailableBW() {
-        return AvailableBW;
-    }
-
-    public void setAvailableBW(int availableBW) {
-        AvailableBW = availableBW;
     }
 
     public long getLinkCost() {
@@ -146,12 +125,8 @@ public class RCU implements Serializable {
         return  "\n\n\t RC ID:                " + getRCID() +
                 "\n\t Link ID:              " + getLinkID() +
                 "\n\t Link Type:            " + getLinkType() +
-                "\n\t Link Capacity:        " + getLinkCapacity() +
-                "\n\t Link Traffic Density: " + getTrafficDensity() +
-                "\n\t Link Available BW:    " + getAvailableBW() +
                 "\n\t Link Cost:            " + getLinkCost() +
-                "\n\n\t RTT Flag:             " + getRttFlag() +
-                "\n\t RTT Sent:             " + getRttSent() +
+                "\n\t RTT Flag:             " + getRttFlag() +
                 "\n";
 
     }
