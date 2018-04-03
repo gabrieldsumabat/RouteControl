@@ -24,6 +24,7 @@ public class Consumer implements Runnable{
                     for (int i=0;i<localConfig.getNoa();i++){
                         if (localConfig.addressBook[i].getRCID()==packet.getRCID()){
                             localConfig.addressBook[i].setLinkCost((packet.getRoundTripTime()*2+localConfig.addressBook[i].getLinkCost()*8)/10);
+                            System.out.println("Updating "+localConfig.addressBook[i].getRCID()+" cost to "+localConfig.addressBook[i].getLinkCost()+"\n");
                         }
                     }
                 }
@@ -39,7 +40,10 @@ public class Consumer implements Runnable{
                                     for (ASN target : localConfig.addressBook) {
                                         if (Ad.getASNID() == target.getASNID() && target.getLinkCost() > netCost) {
                                             target.setLinkCost(netCost);
-                                            target.addHop(packet.getLinkID());
+                                            //If this Hop is not yet considered
+                                            if (target.checkHop(packet.getLinkID())) {
+                                                target.addHop(packet.getLinkID());
+                                            }
                                             target.setIpa(localConfig.getIPAfromASN(localConfig.getASNfromRC(packet.getRCID())));
                                         }
                                     }
