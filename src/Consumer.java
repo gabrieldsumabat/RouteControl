@@ -45,7 +45,9 @@ public class Consumer implements Runnable{
                                     }
                                 } //Else Add ASN to network
                                 else {
-                                    //ADD ASN TO AddressBook
+                                    localConfig.setNoa(localConfig.getNoa() + 1); //Increase the total number of addresses by one
+                                    localConfig.addressBook[localConfig.getNoa()] = Ad; //Set new ASN to the Ad
+                                    localConfig.addressBook[localConfig.getNoa()].addHop(localConfig.getASNfromRC(packet.getRCID())); //Add hop from Packet source
                                 }
                             }
                     }
