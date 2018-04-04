@@ -1,8 +1,7 @@
 public class Command implements  Runnable {
     volatile Config LocalConfig;
 
-    public Command(Config locale){
-        LocalConfig = locale;
+    public Command(){
     }
 
     @Override

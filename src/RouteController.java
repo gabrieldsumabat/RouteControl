@@ -1,30 +1,32 @@
 import java.util.concurrent.LinkedBlockingQueue;
 
+
 public class RouteController {
+    public volatile static Config LocalConfig;
 
     public static void main(String argv[]) {
         //Read the Input Configuration to determine network
-        Config LocalConfig = new Config();
+        LocalConfig = new Config();
         //Initialize the Shared Queue for storing incoming RCU
         LinkedBlockingQueue<RCU> queue = new LinkedBlockingQueue<>();
         //Start the Listener Thread  to handle incoming Connections
-        Listener RouteListen = new Listener(queue, LocalConfig);
+        Listener RouteListen = new Listener(queue);
         Thread listenerThread = new Thread(RouteListen);
         listenerThread.start();
         //Start Consumer Thread to handle incoming RCU
-        Consumer PacketMonster = new Consumer(queue, LocalConfig);
+        Consumer PacketMonster = new Consumer(queue);
         Thread ConsumerThread = new Thread(PacketMonster);
         ConsumerThread.start();
         //Start RcUpdater to send periodic RCU every 3 minutes.
-        RcUpdater RcuUpdater = new RcUpdater(LocalConfig);
+        RcUpdater RcuUpdater = new RcUpdater();
         Thread RcuUpThread = new Thread(RcuUpdater);
         RcuUpThread.start();
         //Start RttUpdater to send periodic RTT Request every 2 minutes
-        RttUpdater RttUpdate = new RttUpdater(LocalConfig);
+        RttUpdater RttUpdate = new RttUpdater();
         Thread RttThread = new Thread(RttUpdate);
         RttThread.start();
         //Start User Commands Thread
-        Command userCommand = new Command(LocalConfig);
+        Command userCommand = new Command();
         Thread userInput = new Thread(userCommand);
         userInput.start();
         //Periodically Print Local Config and Address Book
@@ -44,4 +46,7 @@ public class RouteController {
         }
     }
 }
+//TODO WRITE A BETTER COST FUNCTION
+//TODO REFACTOR CONSUMER
+//TODO WRITE COMMAND FILE
 

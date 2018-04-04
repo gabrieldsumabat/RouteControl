@@ -2,19 +2,18 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
+
 class ServerThread implements Runnable
 {
     private Socket connectionSocket;
     private ObjectInputStream inStream = null;
     private LinkedBlockingQueue<RCU> queue;
-    volatile Config LocalConfig;
 
-    public ServerThread(Socket s, LinkedBlockingQueue<RCU> q, Config localconfig){
+    public ServerThread(Socket s, LinkedBlockingQueue<RCU> q){
         try{
             System.out.println("Client Socket Connected" );
             connectionSocket=s;
             queue = q;
-            LocalConfig = localconfig;
         }catch(Exception e){e.printStackTrace();}
     }
 
@@ -31,12 +30,12 @@ class ServerThread implements Runnable
                 System.out.println("Round Trip Time (ms): " + packet.getRoundTripTime()+"\n");
             }
             //Return RTT_REQUEST if targeted to local ID
-            if (packet.getRttFlag() == 1 && packet.getLinkID()==LocalConfig.myASN.getASNID()) {
+            if (packet.getRttFlag() == 1 && packet.getLinkID()==RouteController.LocalConfig.myASN.getASNID()) {
                 Launcher RttRes = new Launcher();
                 packet.setRttFlag(2);
                 packet.setTargetIP(connectionSocket.getInetAddress());
-                packet.setLinkID(LocalConfig.getASNfromRC(packet.getRCID()));
-                packet.setRCID(LocalConfig.myASN.getRCID());
+                packet.setLinkID(RouteController.LocalConfig.getASNfromRC(packet.getRCID()));
+                packet.setRCID(RouteController.LocalConfig.myASN.getRCID());
                 //Limitation: All Route Controllers must be using port 1450
                 RttRes.sendRCU(packet.getTargetIP(),1450, packet);
             }

@@ -1,11 +1,12 @@
 import java.io.*;
 
+
 public class Config {
-    volatile  ASN myASN;
+    volatile   ASN myASN;
     private ASN[] externalRC = new ASN[25];
     volatile ASN[] addressBook = new ASN[25];
     private int nor;
-    private int noa;
+    private volatile int noa;
 
     public Config() {
         try{

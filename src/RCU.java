@@ -2,6 +2,7 @@ import java.io.Serializable;
 import java.lang.System;
 import java.net.InetAddress;
 
+
 public class RCU implements Serializable {
     //Serialized Object to be exchanged over Socket Connections
 
@@ -27,14 +28,12 @@ public class RCU implements Serializable {
         setRttFlag(RTT_Update);
         if (RTT_Update == 1) {
             setRttSent();
+        } else if (RTT_Update == 0) {
+            advertisement = RouteController.LocalConfig.addressBook;
         }
     }
 
-    public void setAd(ASN[] ad){
-        advertisement = ad;
-    }
-
-    public ASN[] getAd(){
+     public ASN[] getAd(){
         return advertisement;
     }
 
