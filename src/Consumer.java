@@ -15,7 +15,6 @@ public class Consumer implements Runnable{
     public void run() {
         while(true) {
             try {
-
                 packet = queue.take();
                 System.out.println("Packet Being Consumed: \n" + packet + "\n\n");
                 //If RTT_RESP for our RTT_REQ

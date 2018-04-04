@@ -38,7 +38,6 @@ public class Launcher {
      public static void main(String[] args) {
          try {
             RCU RCUsent = new RCU(2, 100, 1,7, 1, InetAddress.getByName("127.0.0.1"));
-            //RCUsent.setAd();
             Launcher client = new Launcher();
             client.sendRCU(RCUsent.getTargetIP(),1450, RCUsent);
             }
