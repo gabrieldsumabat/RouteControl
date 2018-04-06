@@ -37,8 +37,6 @@ public class ASN {
         return null;
     }
 
-    //SETTERS AND GETTERS
-
     public void addHop(int hopID){
         Hops.add(hopID);
     }
@@ -68,7 +66,11 @@ public class ASN {
     }
 
     public void setLinkCost(long linkCost) {
-        LinkCost = linkCost;
+        if (Math.abs(linkCost - LinkCost) > 100) {
+            LinkCost = linkCost;
+        } else {
+            LinkCost = (linkCost*2 + getLinkCost()*8)/10;
+        }
     }
 
     public int getRCID() {

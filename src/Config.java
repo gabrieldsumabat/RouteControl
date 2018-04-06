@@ -17,7 +17,8 @@ public class Config {
             nor = Integer.parseInt(br.readLine());
             for (int i=0; i<nor; i++) {
                 splits = br.readLine().split(" ");
-                externalRC[i] = new ASN(Integer.parseInt(splits[1]), 1, 9, Integer.parseInt(splits[0]), splits[2]);
+                //Link Cost is initiated to 5000 to ensure the first setLinkCost will override the value.
+                externalRC[i] = new ASN(Integer.parseInt(splits[1]), 1, 5000, Integer.parseInt(splits[0]), splits[2]);
             }
             noa = Integer.parseInt(br.readLine());
             for (int i=0; i<noa; i++) {

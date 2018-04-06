@@ -46,7 +46,5 @@ public class RouteController {
         }
     }
 }
-//TODO WRITE A BETTER COST FUNCTION
-//TODO REFACTOR CONSUMER
 //TODO WRITE COMMAND FILE
 

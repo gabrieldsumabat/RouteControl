@@ -19,10 +19,10 @@ public class Consumer implements Runnable{
                 System.out.println("Packet Being Consumed: \n" + packet + "\n\n");
                 //If RTT_RESP for our RTT_REQ
                 if (packet.getRttFlag()==2 && packet.getLinkID()== RouteController.LocalConfig.myASN.getASNID()){
-                    //Update ASN Cost 0.8*last_cost+0.2*current_cost, where cost is RTT
+                    //Update ASN Cost
                     for (int i = 0; i< RouteController.LocalConfig.getNoa(); i++){
                         if (RouteController.LocalConfig.addressBook[i].getRCID()==packet.getRCID()){
-                            RouteController.LocalConfig.addressBook[i].setLinkCost((packet.getRoundTripTime()*2+ RouteController.LocalConfig.addressBook[i].getLinkCost()*8)/10);
+                            RouteController.LocalConfig.addressBook[i].setLinkCost(packet.getRoundTripTime());
                             System.out.println("Updating "+ RouteController.LocalConfig.addressBook[i].getRCID()+" cost to "+ RouteController.LocalConfig.addressBook[i].getLinkCost()+"\n");
                         }
                     }
@@ -70,7 +70,7 @@ public class Consumer implements Runnable{
                                 //If the ASN has no RC -> Print Total Cost and the ASNID it was delivered to
                                 else{
                                     long totalCost = packet.getLinkCost() + RouteController.LocalConfig.addressBook[j].getLinkCost();
-                                    System.out.println("Packet Delivered to "+packet.getLinkID()+"\n\t estimated Cost: "+totalCost);
+                                    System.out.println("Packet Delivered to "+packet.getLinkID()+"\n\t estimated Cost: " + totalCost);
                                 }
                             }
                         }
