@@ -1,8 +1,5 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 
 public class ASN {
@@ -12,7 +9,7 @@ public class ASN {
     private long LinkCost;       //ASN
     private int RCID;           //RC
     private String ipa;         //RC, May be address of next hop!
-    private List<Integer> Hops; //Next Hop in Network
+    private int hop;            //0 if direct connection
 
     public ASN(int aSNID, int linkCapacity, int linkCost, int rCID, String Ipa) {
         setASNID(aSNID);
@@ -20,7 +17,7 @@ public class ASN {
         setLinkCost(linkCost);
         setRCID(rCID);
         setIpa(Ipa);
-        Hops = new LinkedList<>();
+        hop = 0;
     }
 
     public RCU getRCU(ASN targetASN, int RTTFlag) {
@@ -37,12 +34,12 @@ public class ASN {
         return null;
     }
 
-    public void addHop(int hopID){
-        Hops.add(hopID);
+    public void setHop(int hopID){
+        hop = hopID;
     }
 
     public boolean checkHop (int hopID) {
-        return (Hops.contains(hopID));
+        return (hop == hopID);
     }
 
     public int getASNID() {
@@ -103,7 +100,7 @@ public class ASN {
                 "\n\t Link Capacity:           " + getLinkCapacity() +
                 "\n\t Link Cost:               " + getLinkCost() +
                 "\n\t IP:                      " + getIpa() +
-                "\n\t Hops:                    "+ Arrays.toString(Hops.toArray()) +
+                "\n\t hop:                    "+ hop +
                 "\n";
 
     }

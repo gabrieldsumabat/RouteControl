@@ -32,16 +32,16 @@ public class Consumer implements Runnable{
                             ASN[] AdSet = packet.getAd();
                             //For Each Address in the Advertisement, Compare Costs and Update Paths
                             for(ASN Ad:AdSet){
+                                long netCost = Ad.getLinkCost() + packet.getLinkCost();
                                 //Check if ASN is known
                                 if (RouteController.LocalConfig.ASNinBook(Ad.getASNID())) {
                                     //Update AddressBook Costs based on Advertisement
-                                    long netCost = Ad.getLinkCost() + packet.getLinkCost();
                                     for (ASN target : RouteController.LocalConfig.addressBook) {
                                         if (Ad.getASNID() == target.getASNID() && target.getLinkCost() > netCost) {
                                             target.setLinkCost(netCost);
                                             //If this Hop is not yet considered
                                             if (target.checkHop(RouteController.LocalConfig.getASNfromRC(packet.getRCID()))) {
-                                                target.addHop(RouteController.LocalConfig.getASNfromRC(packet.getRCID()));
+                                                target.setHop(RouteController.LocalConfig.getASNfromRC(packet.getRCID()));
                                             }
                                             target.setIpa(RouteController.LocalConfig.getIPAfromASN(RouteController.LocalConfig.getASNfromRC(packet.getRCID())));
                                             System.out.println("Updating "+target.getASNID()+" cost to "+netCost+".\n");
@@ -51,7 +51,9 @@ public class Consumer implements Runnable{
                                 else {
                                     RouteController.LocalConfig.setNoa(RouteController.LocalConfig.getNoa() + 1); //Increase the total number of addresses by one
                                     RouteController.LocalConfig.addressBook[RouteController.LocalConfig.getNoa()] = Ad; //Set new ASN to the Ad
-                                    RouteController.LocalConfig.addressBook[RouteController.LocalConfig.getNoa()].addHop(RouteController.LocalConfig.getASNfromRC(packet.getRCID())); //Add hop from Packet source
+                                    RouteController.LocalConfig.addressBook[RouteController.LocalConfig.getNoa()].setLinkCost(netCost);
+                                    RouteController.LocalConfig.addressBook[RouteController.LocalConfig.getNoa()].setIpa(RouteController.LocalConfig.getIPAfromASN(RouteController.LocalConfig.getASNfromRC(packet.getRCID()))); //Set IPA to incoming
+                                    RouteController.LocalConfig.addressBook[RouteController.LocalConfig.getNoa()].setHop(RouteController.LocalConfig.getASNfromRC(packet.getRCID())); //Set hop from Packet source
                                     System.out.println("Discovered new ASN: "+RouteController.LocalConfig.addressBook[RouteController.LocalConfig.getNoa()]);
                                 }
                             }
