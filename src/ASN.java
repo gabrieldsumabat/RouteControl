@@ -23,7 +23,7 @@ public class ASN {
     public RCU getRCU(ASN targetASN, int RTTFlag) {
         try {
             InetAddress ipaddress =InetAddress.getByName(targetASN.getIpa());
-            RCU packet = new RCU(this.getRCID(), targetASN.getASNID(),2,targetASN.getLinkCost(),RTTFlag,ipaddress);
+            RCU packet = new RCU(RouteController.LocalConfig.myASN.getRCID(), targetASN.getASNID(),2,targetASN.getLinkCost(),RTTFlag,ipaddress);
             if (targetASN.getRCID() != -1) {
                 packet.setLinkType(1);
             }
@@ -100,7 +100,7 @@ public class ASN {
                 "\n\t Link Capacity:           " + getLinkCapacity() +
                 "\n\t Link Cost:               " + getLinkCost() +
                 "\n\t IP:                      " + getIpa() +
-                "\n\t hop:                    "+ hop +
+                "\n\t hop:                     "+ hop +
                 "\n";
 
     }
