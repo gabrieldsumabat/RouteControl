@@ -2,13 +2,20 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
-
+/**
+ * Creates new Server thread to handle incoming Socket connections
+ */
 class ServerThread implements Runnable
 {
     private Socket connectionSocket;
     private ObjectInputStream inStream = null;
     private LinkedBlockingQueue<RCU> queue;
 
+    /**
+     * Creates new Server Thread at Port 1450
+     * @param s Socket where a RCU is being delivered
+     * @param q LinkedBlockingQueue to produce RCU data
+     */
     public ServerThread(Socket s, LinkedBlockingQueue<RCU> q){
         try{
             System.out.println("Client Socket Connected" );

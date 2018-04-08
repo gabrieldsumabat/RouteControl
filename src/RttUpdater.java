@@ -1,9 +1,15 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-
+/**
+ * RttUpdater sends periodic RTT_REQ RCU packets to all Route Controllers.
+ * Updates the Link Cost based on the returned data of RTT_RESP
+ */
 public class RttUpdater implements Runnable {
 
+    /**
+     * Creates new RTT Updater
+     */
     public RttUpdater(){
     }
 

@@ -1,7 +1,14 @@
 import java.util.Scanner;
 
+/**
+ * Command reads the user input to manually send packets or update the system.
+ */
+
 public class Command implements  Runnable {
 
+    /**
+     * Creates new Command. Multithreaded, must call thread.start();
+     */
     public Command(){
     }
 
@@ -44,6 +51,14 @@ public class Command implements  Runnable {
         }
     }
 
+    /**
+     * Adds a new ASN to the Address Book
+     * @param aSNID ASN ID of new contact
+     * @param linkCapacity Capacity in MB, depreciated
+     * @param linkCost Expected Round Trip Transit Time
+     * @param rCID ID of Route Controller, -1 if none
+     * @param Ipa IP Address of connection. 'null' if a direct connection with no Route Controller
+     */
     private void addRC (int aSNID, int linkCapacity, int linkCost, int rCID, String Ipa) {
         ASN newASN = new ASN(aSNID, linkCapacity, linkCost, rCID, Ipa);
         RouteController.LocalConfig.setNoa(RouteController.LocalConfig.getNoa()+1);
@@ -51,6 +66,10 @@ public class Command implements  Runnable {
         System.out.println("Added a new ASN :" + newASN);
     }
 
+    /**
+     * Sends RCU Update containing Advertisement to target ASN
+     * @param aSNID Target ASN ID
+     */
     private void sendRCU(int aSNID){
         for (ASN id: RouteController.LocalConfig.addressBook) {
             if (id != null) {
@@ -64,6 +83,10 @@ public class Command implements  Runnable {
         }
     }
 
+    /**
+     * Sends RCU RTT_REQ to target ASN
+     * @param aSNID Target ASN ID
+     */
    private void sendRTT (int aSNID){
        for (ASN id: RouteController.LocalConfig.addressBook) {
            if (id != null) {
@@ -77,6 +100,9 @@ public class Command implements  Runnable {
        }
    }
 
+    /**
+     * Prints all known addresses and local configuration to System out
+     */
    private void print(){
        System.out.println("Local ASN Values: ");
        System.out.println(RouteController.LocalConfig.myASN);

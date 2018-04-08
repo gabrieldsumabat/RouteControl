@@ -76,12 +76,4 @@ public class Config {
     public void setNoa(int noadd){
         noa = noadd;
     }
-
-    public static void main(String argv[]) {
-        Config localConfig = new Config();
-        System.out.println(localConfig.myASN);
-        for (int j=0; j<4;j++) {
-            System.out.println(localConfig.addressBook[j]);
-        }
-    }
 }

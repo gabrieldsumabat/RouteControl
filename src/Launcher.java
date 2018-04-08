@@ -3,7 +3,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 
 
 public class Launcher {
@@ -12,13 +11,22 @@ public class Launcher {
     private ObjectOutputStream outputStream = null;
     private boolean isConnected = false;
 
+    /**
+     * Template Class for sending RCU to target Server Socket
+     * @see #sendRCU(InetAddress, int, RCU)
+     */
     public Launcher() {
 
     }
-
+    /**
+     * Send RCU to target Server
+     *
+     * @param hostname InetAddress of target server socket
+     * @param portNum Port of target socket
+     * @param updatePacket RCU object to be transferred
+     */
     public void sendRCU(InetAddress hostname, int portNum, RCU updatePacket) {
-
-        while (!isConnected) {
+         while (!isConnected) {
             try {
                 socket = new Socket(hostname, portNum);
                 System.out.println("Connected");
@@ -33,17 +41,4 @@ public class Launcher {
             }
         }
     }
-
-
-     public static void main(String[] args) {
-         try {
-            RCU RCUsent = new RCU(2, 100, 1,7, 1, InetAddress.getByName("127.0.0.1"));
-            Launcher client = new Launcher();
-            client.sendRCU(RCUsent.getTargetIP(),1450, RCUsent);
-            }
-            catch (UnknownHostException uhe) {
-                uhe.printStackTrace();
-        }
-    }
 }
-

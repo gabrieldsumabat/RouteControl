@@ -1,5 +1,13 @@
 import java.util.concurrent.LinkedBlockingQueue;
 
+/** This is the main program for running the Route Controller.
+ * Reads the input configuration and spawns all component threads.
+ * Periodically prints out current configuration.
+ *
+ *
+ * @author Gabriel Sumabat
+ *
+ */
 
 public class RouteController {
     public volatile static Config LocalConfig;
@@ -17,14 +25,14 @@ public class RouteController {
         Consumer PacketMonster = new Consumer(queue);
         Thread ConsumerThread = new Thread(PacketMonster);
         ConsumerThread.start();
-        //Start RcUpdater to send periodic RCU every 3 minutes.
-        RcUpdater RcuUpdater = new RcUpdater();
-        Thread RcuUpThread = new Thread(RcuUpdater);
-        RcuUpThread.start();
         //Start RttUpdater to send periodic RTT Request every 2 minutes
         RttUpdater RttUpdate = new RttUpdater();
         Thread RttThread = new Thread(RttUpdate);
         RttThread.start();
+        //Start RcUpdater to send periodic RCU every 3 minutes.
+        RcUpdater RcuUpdater = new RcUpdater();
+        Thread RcuUpThread = new Thread(RcuUpdater);
+        RcuUpThread.start();
         //Start User Commands Thread
         Command userCommand = new Command();
         Thread userInput = new Thread(userCommand);
@@ -46,5 +54,4 @@ public class RouteController {
         }
     }
 }
-//TODO WRITE COMMAND FILE
 

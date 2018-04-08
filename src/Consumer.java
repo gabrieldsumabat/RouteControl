@@ -2,11 +2,17 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
 
-
+/**
+ * Consumer is responsible for updating the Address Book with the RCU data
+ */
 public class Consumer implements Runnable{
     private LinkedBlockingQueue<RCU> queue;
     private RCU packet;
 
+    /**
+     * Creates a new Consumer
+     * @param q Shared LinkedBlockingQueue to read RCU data from
+     */
     public Consumer(LinkedBlockingQueue<RCU> q) {
         queue=q;
     }
@@ -44,8 +50,8 @@ public class Consumer implements Runnable{
                                                     //If this Hop is not yet considered
                                                     if (target.checkHop(RouteController.LocalConfig.getASNfromRC(packet.getRCID()))) {
                                                         target.setHop(RouteController.LocalConfig.getASNfromRC(packet.getRCID()));
+                                                        target.setIpa(RouteController.LocalConfig.getIPAfromASN(RouteController.LocalConfig.getASNfromRC(packet.getRCID())));
                                                     }
-                                                    target.setIpa(RouteController.LocalConfig.getIPAfromASN(RouteController.LocalConfig.getASNfromRC(packet.getRCID())));
                                                     System.out.println("Updating RC#" + target.getASNID() + " cost to " + netCost + ".\n");
                                                 }
                                             }
@@ -72,10 +78,11 @@ public class Consumer implements Runnable{
                                     packet.setTargetIP(InetAddress.getByName(RouteController.LocalConfig.addressBook[j].getIpa()));
                                     Launcher client = new Launcher();
                                     client.sendRCU(packet.getTargetIP(),1450, packet);
+                                    System.out.println("Forwarding Packet to ASN#"+RouteController.LocalConfig.addressBook[j].getASNID());
                                 }
                                 //If the ASN has no RC -> Print Total Cost and the ASNID it was delivered to
                                 else{
-                                    long totalCost = packet.getLinkCost() + RouteController.LocalConfig.addressBook[j].getLinkCost();
+                                    long totalCost = RouteController.LocalConfig.addressBook[j].getLinkCost();
                                     System.out.println("Packet Delivered to ASN#"+packet.getLinkID()+" estimated Cost: " + totalCost);
                                 }
                             }

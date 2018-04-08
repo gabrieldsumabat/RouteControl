@@ -1,9 +1,14 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-
+/**
+ * Sends periodic RCU Updates to all known Route Controllers every 3 minutes.
+ */
 public class RcUpdater implements Runnable {
 
+    /**
+     * Creates a new RcUpdater
+     */
     public RcUpdater(){
     }
 
