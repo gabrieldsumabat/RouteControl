@@ -71,6 +71,10 @@ public class ASN implements Serializable {
         }
     }
 
+    public void forceLinkCost(long linkCost) {
+        LinkCost = linkCost;
+    }
+
     public int getRCID() {
         return RCID;
     }
