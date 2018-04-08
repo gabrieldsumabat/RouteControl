@@ -14,18 +14,32 @@ public class Command implements  Runnable {
                                "\n\t  sendRCU [aSNID] \n\t  sendRTT [aSNID] \n\t  print");
             String words = in.nextLine();
             String[] args = words.split(" ");
-            switch (args[0]){
-                case "addRC":
-                    addRC(Integer.parseInt(args[1]),Integer.parseInt(args[2]),Integer.parseInt(args[3]),Integer.parseInt(args[4]),args[5]);
-                    break;
-                case "sendRCU":
-                    sendRCU(Integer.parseInt(args[1]));
-                case "sendRTT":
-                    sendRTT(Integer.parseInt(args[1]));
-                case "print":
-                    print();
-                default:
-                    System.out.println("Invalid input. Please review and attempt again.");
+            if (args.length > 0) {
+                switch (args[0]) {
+                    case "addRC":
+                        if (args.length == 6) {
+                            addRC(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), args[5]);
+                        } else {
+                            System.out.println("Not enough arguments.");
+                        }
+                    case "sendRCU":
+                        if (args.length == 2) {
+                            sendRCU(Integer.parseInt(args[1]));
+                        } else {
+                            System.out.println("Please specify ASNID.");
+                        }
+                    case "sendRTT":
+                        if (args.length == 2) {
+                            sendRTT(Integer.parseInt(args[1]));
+                        } else {
+                            System.out.println("Please specify ASNID");
+                        }
+                    case "print":
+                        print();
+                    default:
+                        System.out.println("");
+
+                }
             }
         }
     }
@@ -39,22 +53,26 @@ public class Command implements  Runnable {
 
     private void sendRCU(int aSNID){
         for (ASN id: RouteController.LocalConfig.addressBook) {
-            if (id.getASNID()==aSNID) {
-                RCU RCpacket = id.getRCU(id ,0);
-                Launcher rcuLaunch = new Launcher ();
-                rcuLaunch.sendRCU(RCpacket.getTargetIP(), 1450, RCpacket);
-                System.out.println("Sending RCU to "+aSNID);
+            if (id != null) {
+                if (id.getASNID() == aSNID) {
+                    RCU RCpacket = id.getRCU(id, 0);
+                    Launcher rcuLaunch = new Launcher();
+                    rcuLaunch.sendRCU(RCpacket.getTargetIP(), 1450, RCpacket);
+                    System.out.println("Sending RCU to " + aSNID);
+                }
             }
         }
     }
 
    private void sendRTT (int aSNID){
        for (ASN id: RouteController.LocalConfig.addressBook) {
-           if (id.getASNID()==aSNID) {
-               RCU RtPacket = id.getRCU(id ,1);
-               Launcher rcuLaunch = new Launcher ();
-               rcuLaunch.sendRCU(RtPacket.getTargetIP(), 1450, RtPacket);
-               System.out.println("Sending RTT to "+aSNID);
+           if (id != null) {
+               if (id.getASNID() == aSNID) {
+                   RCU RtPacket = id.getRCU(id, 1);
+                   Launcher rcuLaunch = new Launcher();
+                   rcuLaunch.sendRCU(RtPacket.getTargetIP(), 1450, RtPacket);
+                   System.out.println("Sending RTT to " + aSNID);
+               }
            }
        }
    }

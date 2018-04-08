@@ -23,7 +23,7 @@ public class Consumer implements Runnable{
                     for (int i = 0; i< RouteController.LocalConfig.getNoa(); i++){
                         if (RouteController.LocalConfig.addressBook[i].getRCID()==packet.getRCID()){
                             RouteController.LocalConfig.addressBook[i].setLinkCost(packet.getRoundTripTime());
-                            System.out.println("Updating "+ RouteController.LocalConfig.addressBook[i].getRCID()+" cost to "+ RouteController.LocalConfig.addressBook[i].getLinkCost()+"\n");
+                            System.out.println("Updating RC#"+ RouteController.LocalConfig.addressBook[i].getRCID()+" cost to "+ RouteController.LocalConfig.addressBook[i].getLinkCost()+"\n");
                         }
                     }
                 }
@@ -76,7 +76,7 @@ public class Consumer implements Runnable{
                                 //If the ASN has no RC -> Print Total Cost and the ASNID it was delivered to
                                 else{
                                     long totalCost = packet.getLinkCost() + RouteController.LocalConfig.addressBook[j].getLinkCost();
-                                    System.out.println("Packet Delivered to "+packet.getLinkID()+"\n\t estimated Cost: " + totalCost);
+                                    System.out.println("Packet Delivered to ASN#"+packet.getLinkID()+" estimated Cost: " + totalCost);
                                 }
                             }
                         }

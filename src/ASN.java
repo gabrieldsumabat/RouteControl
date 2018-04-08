@@ -64,7 +64,7 @@ public class ASN implements Serializable {
     }
 
     public void setLinkCost(long linkCost) {
-        if ((linkCost - LinkCost) > 100) {
+        if ((LinkCost - linkCost) > 100) {
             LinkCost = linkCost;
         } else {
             LinkCost = (linkCost*2 + getLinkCost()*8)/10;
