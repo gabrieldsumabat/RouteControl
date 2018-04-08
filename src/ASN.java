@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 
-public class ASN {
+public class ASN implements Serializable {
     //Object storing information about each possible address
     private int ASNID;          //RC+ASN
     private int LinkCapacity;   //ASN
@@ -63,7 +64,7 @@ public class ASN {
     }
 
     public void setLinkCost(long linkCost) {
-        if (Math.abs(linkCost - LinkCost) > 100) {
+        if ((linkCost - LinkCost) > 100) {
             LinkCost = linkCost;
         } else {
             LinkCost = (linkCost*2 + getLinkCost()*8)/10;
