@@ -15,7 +15,7 @@ public class ASN implements Serializable {
     public ASN(int aSNID, int linkCapacity, int linkCost, int rCID, String Ipa) {
         setASNID(aSNID);
         setLinkCapacity(linkCapacity);
-        setLinkCost(linkCost);
+        LinkCost = linkCost;
         setRCID(rCID);
         setIpa(Ipa);
         hop = 0;
