@@ -6,3 +6,5 @@ The Route Controller will learn of nearby Routes through advertisement updates a
 The config.txt file placed in git is an example.
 
 Current Network max is 25 nodes.
+
+Created using Java 1.8, will work on both Windows and Linux servers.
