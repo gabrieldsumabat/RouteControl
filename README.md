@@ -1,6 +1,5 @@
-Project Overview:
-
 Requires: Java 1.8+
+
 Uses: Port 1450
 
 Network simulation demonstrating the implementation of Open Shortest Path First (OSPF) with Route Advertisement.
