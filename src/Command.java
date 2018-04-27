@@ -61,8 +61,8 @@ public class Command implements  Runnable {
      */
     private void addRC (int aSNID, int linkCapacity, int linkCost, int rCID, String Ipa) {
         ASN newASN = new ASN(aSNID, linkCapacity, linkCost, rCID, Ipa);
-        RouteController.LocalConfig.setNoa(RouteController.LocalConfig.getNoa()+1);
         RouteController.LocalConfig.addressBook[RouteController.LocalConfig.getNoa()]=newASN;
+        RouteController.LocalConfig.setNoa(RouteController.LocalConfig.getNoa()+1);
         System.out.println("Added a new ASN :" + newASN);
     }
 
